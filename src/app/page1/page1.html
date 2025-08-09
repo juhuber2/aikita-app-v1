@@ -1,1 +1,26 @@
 <h2>Table</h2>
+
+<table class="users-table">
+    <thead>
+        <tr>
+            @for (column of columns; track $index) {
+                 <th class="users-table-cell"
+                 
+                 >
+                  {{ capitalize(column) }}
+                  <span *ngIf="isDescSorting(column)">▼</span>
+                  <span *ngIf="isAscSorting(column)">▲</span>
+                 </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @for (list of lists; track list.id) {
+      <tr>
+        @for (column of columns; track $index) {
+          <td class="users-table-cell">{{ list[column] }}</td>
+        }
+      </tr>
+    }
+    </tbody>
+</table>

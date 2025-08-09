@@ -1,5 +1,10 @@
 export interface List {
     id: string;
-    nameChild: string;
+    name: string;
     age: number;    
+}
+
+export interface SortingInterface { 
+    column: string;
+    order: 'asc' | 'desc';
 }
