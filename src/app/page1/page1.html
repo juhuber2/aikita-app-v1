@@ -1,11 +1,11 @@
 <h2>Table</h2>
 
+<!--
 <table class="users-table">
     <thead>
         <tr>
             @for (column of columns; track $index) {
-                 <th class="users-table-cell"
-                 
+                 <th class="users-table-cell" (click)="sortTable(column)"
                  >
                   {{ capitalize(column) }}
                   <span *ngIf="isDescSorting(column)">▼</span>
@@ -17,10 +17,36 @@
     <tbody>
         @for (list of lists; track list.id) {
       <tr>
-        @for (column of columns; track $index) {
+        @for (column of columns; track column) {
           <td class="users-table-cell">{{ list[column] }}</td>
         }
       </tr>
     }
     </tbody>
+</table>
+-->
+
+
+<table class="users-table">
+  <thead>
+    <tr>
+      <th
+        *ngFor="let column of columns"
+        class="users-table-cell"
+        (click)="sortTable(column)"
+      >
+        {{ capitalize(column) }}
+        <span *ngIf="isDescSorting(column)">▼</span>
+        <span *ngIf="isAscSorting(column)">▲</span>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let list of lists">
+      <td *ngFor="let column of columns" class="users-table-cell">
+        {{ list[column] }}
+      </td>
+    </tr>
+  </tbody>
 </table>

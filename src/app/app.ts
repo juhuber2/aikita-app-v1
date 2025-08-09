@@ -2,7 +2,6 @@ import { Component, HostListener, OnInit, signal } from '@angular/core';
 import { LeftSidebar } from './left-sidebar/left-sidebar';
 import { Main } from './main/main';
 
-
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -29,4 +28,5 @@ export class App implements OnInit {
   changeIsLeftSidebarCollapsed(isLeftSidebarCollapsed: boolean): void {
     this.isLeftSidebarCollapsed.set(isLeftSidebarCollapsed);
   }
+
 }

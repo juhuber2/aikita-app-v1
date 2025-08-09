@@ -14,9 +14,9 @@ export class Page1 implements OnInit {
   lists: List[] = [];
   columns: Array<keyof List> = ['id', 'name', 'age'];
   sorting: SortingInterface = {
-    column: 'name',
+    column: 'id',
     order: 'asc'
-  }
+  };
 
   constructor(private communication: Communication) { }
 
@@ -41,5 +41,14 @@ export class Page1 implements OnInit {
 
   isAscSorting(column: string): boolean {
     return this.sorting.column === column && this.sorting.order === 'asc';
-  } 
-}
+  }
+
+  sortTable(column: string): void {
+    const futureSortingOrder = this.isDescSorting(column) ? 'asc' : 'desc';
+    this.sorting = {
+      column,   
+      order: futureSortingOrder,
+    };
+    this.fetchData();
+   }
+  }
