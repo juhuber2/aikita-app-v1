@@ -9,3 +9,11 @@ body {
   font-family: "Roboto", sans-serif;
   background: #f4f7fa;
 }
+
+.bottom-right {
+  position: fixed;
+  bottom: 10px; /* Abstand vom unteren Rand */
+  right: 1px; /* Abstand vom rechten Rand */
+  width: 290px; /* Passe die Breite des Bildes an */
+  z-index: 1000; /* Stelle sicher, dass das Bild über anderen Elementen liegt */
+}
