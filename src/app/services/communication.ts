@@ -10,8 +10,8 @@ export class Communication {
   
   constructor(private httpClient: HttpClient) {}
 
-  getList(sorting: SortingInterface): Observable<List[]> {
-    const url = `https://raw.githubusercontent.com/juhuber2/my-json-data/refs/heads/main/listsTest.json?_sort=${sorting.column}&_order=${sorting.order}`;
+  getList(sorting: SortingInterface, searchValue: string): Observable<List[]> {
+    const url = `https://jsonplaceholder.typicode.com/users?_sort=${sorting.column}&_order=${sorting.order}&name_like=${searchValue}`;
     return this.httpClient.get<List[]>(url);
   }
 }

@@ -1,7 +1,8 @@
 export interface List {
     id: string;
     name: string;
-    age: number;    
+    username: string;
+    email: string;
 }
 
 export interface SortingInterface { 

@@ -1,31 +1,41 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Communication } from '../services/communication';
 import { List, SortingInterface } from '../models/list';
 
+
 @Component({
   selector: 'app-page1',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './page1.html',
   styleUrl: './page1.css'
 })
 export class Page1 implements OnInit {
   lists: List[] = [];
-  columns: Array<keyof List> = ['id', 'name', 'age'];
+  columns: Array<keyof List> = ['id', 'name', 'username', 'email'];
   sorting: SortingInterface = {
     column: 'id',
     order: 'asc'
   };
 
-  constructor(private communication: Communication) { }
+  // Reactive form for search functionality
+  searchForm;
+
+  constructor(private communication: Communication, private fb: FormBuilder) { 
+    this.searchForm = this.fb.nonNullable.group({
+      searchValue: ''
+    });
+  }
+
+  searchValue: string = '';
 
   ngOnInit(): void {
     this.fetchData();
   }
 
   fetchData(): void {
-    this.communication.getList(this.sorting).subscribe((lists) => {
+    this.communication.getList(this.sorting, this.searchValue).subscribe((lists) => {
       this.lists = lists;
       console.log(this.lists);
     });
@@ -50,5 +60,13 @@ export class Page1 implements OnInit {
       order: futureSortingOrder,
     };
     this.fetchData();
+   }
+
+   onSearchSubmit(): void {
+    console.log('searchValue:', this.searchForm.value.searchValue);
+    this.searchValue = (this.searchForm.value.searchValue ?? '').trim().toLowerCase();
+    this.fetchData();
+    /* ? Optional Chaining: Verhindert, dass eine Methode aufgerufen wird, wenn der Wert null oder undefined ist. */
+    /* ?? Nullish Coalescing: Falls der Wert null oder undefined ist, nimm stattdessen diesen Wert. */
    }
   }
