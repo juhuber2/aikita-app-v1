@@ -1,36 +1,38 @@
-<h2>Table</h2>
+<h1 class="text-center">User List</h1>
 
-<!--
-<table class="users-table">
-    <thead>
-        <tr>
-            @for (column of columns; track $index) {
-                 <th class="users-table-cell" (click)="sortTable(column)"
-                 >
-                  {{ capitalize(column) }}
-                  <span *ngIf="isDescSorting(column)">▼</span>
-                  <span *ngIf="isAscSorting(column)">▲</span>
-                 </th>
-            }
-        </tr>
-    </thead>
-    <tbody>
-        @for (list of lists; track list.id) {
-      <tr>
-        @for (column of columns; track column) {
-          <td class="users-table-cell">{{ list[column] }}</td>
-        }
-      </tr>
-    }
-    </tbody>
-</table>
--->
+<div class="d-flex justify-content-between align-items-center">
+  
+  <!-- Linke Seite: Buttons -->
+  <div class="d-flex gap-2">
+    <button id="excel-table"
+            class="btn btn-primary"
+            (click)="exportexcel()">
+      Excel
+    </button>
 
-<div>
-  <form [formGroup]="searchForm" (ngSubmit)="onSearchSubmit()" class="search-bar">
-    <input type="text" placeholder="Search..." formControlName="searchValue" />
+    <button id="pdf-doc"
+            class="btn btn-primary"
+            (click)="generatePDF()">
+      PDF
+    </button>
+  </div>
+
+  <!-- Rechte Seite: Search Form -->
+  <form [formGroup]="searchForm"
+        (ngSubmit)="onSearchSubmit()"
+        class="search-bar ms-4">
+    <div class="input-group">
+      <input type="text"
+             class="form-control"
+             placeholder="Search..."
+             formControlName="searchValue" />
+      <button type="submit" class="btn btn-primary">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
   </form>
 </div>
+
 <table class="users-table">
   <thead>
     <tr>

@@ -3,6 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Communication } from '../services/communication';
 import { List, SortingInterface } from '../models/list';
+import * as XLSX from 'xlsx';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+
+// Fonts registrieren
+(pdfMake as any).vfs = (pdfFonts as any).vfs;
 
 
 @Component({
@@ -69,4 +75,47 @@ export class Page1 implements OnInit {
     /* ? Optional Chaining: Verhindert, dass eine Methode aufgerufen wird, wenn der Wert null oder undefined ist. */
     /* ?? Nullish Coalescing: Falls der Wert null oder undefined ist, nimm stattdessen diesen Wert. */
    }
+
+  // Export to Excel functionality
+    fileName = 'ExportExce.xlsx';
+    exportexcel(): void {
+        /* pass here the table id */
+        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.lists);
+        /* generate workbook and add the worksheet */
+        const wb: XLSX.WorkBook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        /* save to file */
+        XLSX.writeFile(wb, this.fileName);
+    }
+
+    // Exort to PDF functionality
+    generatePDF(): void { 
+      const docDefinition = {
+        content: [
+          {
+            text: 'Exported Data',
+            style: 'header'
+          },
+          {
+            table: {
+              body: [
+                this.columns.map(col => this.capitalize(col.toString())),
+                ...this.lists.map(item => this.columns.map(col => item[col]))
+              ]
+            }
+          }
+        ],
+        styles: {
+          header: {
+            fontSize: 18,
+            bold: true,
+            margin: [0, 0, 0, 10]  as [number, number, number, number]
+          }
+        }
+      };
+
+      pdfMake.createPdf(docDefinition).download('exported_data.pdf');
+    } 
+
+
   }
